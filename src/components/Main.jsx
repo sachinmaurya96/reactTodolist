@@ -5,12 +5,25 @@ function Main() {
 
   const [input, setInput] = useState("");
   const [arr, setArr] = useState([]);
-  const [id,setId]= useState()
+  const [id,setId]= useState(null)
+  const [toggle,seToggle] = useState(false)
 
   const addhandle = (e) => {
     e.preventDefault();
       if(!input){
         alert("plz write something")
+      }else if(id!=null){
+        setArr(
+          arr.map((elem,index)=>{
+            if(id===index){
+              return [...elem,input]
+              
+            }
+            return elem;
+          })
+        )
+        setId(null)
+        seToggle(false)
       }else{
         setArr([...arr, input]);
       }
@@ -22,6 +35,7 @@ function Main() {
   const edit = (i) => {
     setId(i)
     setInput(arr[i])
+    seToggle(true)
   };
 
   const remove = (i) => {
@@ -61,7 +75,9 @@ function Main() {
                     onClick={addhandle}
                     className="btn btn-primary"
                   >
-                    Add
+                    {
+                      toggle? "Edit":"Add"
+                    }
                   </button>
                 </form>
               </div>
